@@ -6,4 +6,4 @@ O projeto se trata de 3 aplicações distintas:
 - Aplicação WEB desenvolvida em ReactJS
 - Aplicação Mobile desenvolvida em React Native
 
-Toda a aplicação foi desenvolvida com **TypeScript**.
+Todas as aplicações foram desenvolvidas com **TypeScript**. Os detalhes de cada uma são encontrados no *readme.md* dentro da pasta de cada aplicação :)
