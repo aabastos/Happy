@@ -42,13 +42,6 @@ export default function CreateOrphanage() {
     }
 
     function handleSubmit(event: FormEvent) {
-        console.log({
-            name,
-            about,
-            instructions,
-            position,
-            opening_hours
-        })
         const { latitude, longitude } = position;
 
         const data = new FormData();
@@ -75,8 +68,10 @@ export default function CreateOrphanage() {
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition((position) => {
-            const { latitude, longitude } = position.coords;
-            setCurrentPosition({ latitude, longitude });
+            if (position) {
+                const { latitude, longitude } = position.coords;
+                setCurrentPosition({ latitude, longitude });
+            }
         })
     }, [])
 
