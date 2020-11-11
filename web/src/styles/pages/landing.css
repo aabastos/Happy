@@ -27,7 +27,7 @@
 
 .content .location {
     position: absolute;
-    right: 0;
+    left: 300px;
     top: 0;
 
     font-weight: 600;
@@ -38,6 +38,33 @@
     flex-direction: column;
 
     text-align: right;
+}
+
+.content .restricted-access {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 222px;
+    height: 56px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #12D4E0;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    text-decoration: none;
+
+    font-weight: 800;
+    font-size: 20px;
+    line-height: 30px;
+}
+
+.content .restricted-access:hover {
+    background-color: #96FEFF;
+    color: #15C3D6;
 }
 
 .content .location strong {

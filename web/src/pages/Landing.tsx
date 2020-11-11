@@ -17,6 +17,8 @@ function Landing() {
                     <p>Visite orfanatos e mude o dia de muitas crianças.</p>
                 </main>
 
+                <Link to="/login" className="restricted-access">Acesso Restrito</Link>
+
                 <div className="location">
                     <strong>Belo Horizonte</strong>
                     <span>Minas Gerais</span>
