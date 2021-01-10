@@ -1,22 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import DashboardOrphanage from '../components/DashboardOrphanage';
 
 import '../styles/pages/dashboard.css';
-function Dashboard() {
+
+export default function DashboardPending() {
+
+    useEffect(() => {
+    }, [])
     return (
         <div id="dashboard-page">
-            <Sidebar dashboard={true} />
+            <Sidebar dashboard={true} selectedMenu={1} />
 
             <main>
                 <div className="orphanages-container">
-                    <DashboardOrphanage />
-                    <DashboardOrphanage />
-                    <DashboardOrphanage />
                 </div>
             </main>
         </div>
     )
 }
-
-export default Dashboard;

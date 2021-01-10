@@ -1,14 +1,15 @@
 .orphanage {
+    margin: 0px auto;
     width: 544px;
     height: 309px;
 
     background-color: #ffffff;
-    border-top-left-radius: 2rem;
-    border-top-right-radius: 2rem;
+    border-radius: 2rem;
 }
 
 .orphanage .leaflet-container {
     border-radius: 2rem;
+    z-index: 5;
 }
 
 .orphanage footer {
@@ -16,10 +17,8 @@
     height: 82px;
 
     color: #4D6F80;
-    background-color: #ffffff;
     padding: 24px;
 
-    border-radius: 2rem;
     display: flex;
     flex-direction: row;
     align-items: center;

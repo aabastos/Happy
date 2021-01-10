@@ -8,6 +8,9 @@ aside.app-sidebar {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+
+    
+    z-index: 10;
 }
 
 aside.app-sidebar img {
@@ -24,7 +27,7 @@ aside.app-sidebar .buttons {
     justify-content: space-between;
 }
 
-aside.app-sidebar .buttons button,
+aside.app-sidebar .buttons a,
 aside.app-sidebar footer a,
 aside.app-sidebar footer button {
     width: 48px;
@@ -44,7 +47,7 @@ aside.app-sidebar footer button {
     align-items: center;
 }
 
-aside.app-sidebar .buttons button:hover,
+aside.app-sidebar .buttons a:hover,
 aside.app-sidebar footer a:hover,
 aside.app-sidebar footer button:hover {
     background: #17D6EB;

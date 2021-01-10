@@ -1,4 +1,5 @@
 #dashboard-page {
+    width: 100%;
     display: flex;
     flex-direction: row;
 }
@@ -8,11 +9,15 @@
 }
 
 #dashboard-page .orphanages-container {
-    margin: 64px 208px;
+    width: 75%;
+    margin: 64px auto;
     height: 100%;
-
+    
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     grid-gap: 32px;
 }
-  
+
+@media (min-width: 700px){
+
+}  
