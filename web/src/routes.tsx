@@ -9,8 +9,19 @@ import CreateOrphanage from './pages/CreateOrphanage';
 import Login from './pages/Login';
 import ForgotPassword from './pages/ForgotPassword';
 import NewPassword from './pages/NewPassword';
+import Dashboard from './pages/Dashboard';
 
 function Routes() {
+    function isSignedIn() {
+        const token = localStorage.getItem("TOKEN");
+
+        if (token) {
+
+        } else {
+            return false;
+        }
+    }
+
     return (
         <BrowserRouter>
             <Switch>
@@ -21,6 +32,7 @@ function Routes() {
                 <Route path="/login" component={Login} />
                 <Route path="/forgot-password" component={ForgotPassword} />
                 <Route path="/new-password" component={NewPassword} />
+                <Route path="/dashboard" component={Dashboard} />
             </Switch>
         </BrowserRouter>
     );

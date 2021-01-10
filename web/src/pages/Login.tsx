@@ -1,19 +1,44 @@
-import React from 'react';
+import React, { FormEvent, useState } from 'react';
 
 import DashboardLanding from '../components/DashboardLanding';
 import DashboardBackButton from '../components/DashboardBackButton';
 
 import '../styles/pages/login.css';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import api from '../services/api';
+import { AxiosError, AxiosResponse } from 'axios';
 
 function Login() {
+    const history = useHistory();
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    function handleLogin(evt: FormEvent) {
+        evt.preventDefault();
+
+        api.post('authenticate', {
+            email: email,
+            password: password
+        }).then(
+            (response: AxiosResponse) => {
+                const { token } = response.data;
+                localStorage.setItem("TOKEN", token);
+                history.push("/dashboard");
+            },
+            (error: AxiosError) => {
+                alert(error.response?.data.message);
+            }
+        )
+    }
+
     return (
         <div id="login-page">
             <DashboardBackButton to="/" />
             <DashboardLanding />
 
             <div className="login-inputs">
-                <form>
+                <form onSubmit={handleLogin}>
                     <fieldset>
                         <legend>Fazer login</legend>
                         <div className="input-block">
@@ -21,6 +46,8 @@ function Login() {
                             <input
                                 type="email"
                                 id="email"
+                                value={email}
+                                onChange={(evt) => setEmail(evt.target.value)}
                             />
                         </div>
                         <div className="input-block">
@@ -28,6 +55,8 @@ function Login() {
                             <input
                                 type="password"
                                 id="password"
+                                value={password}
+                                onChange={(evt) => setPassword(evt.target.value)}
                             />
                         </div>
                         <div>
@@ -40,7 +69,7 @@ function Login() {
                         </div>
                     </fieldset>
 
-                    <button type="submit" >Entrar</button>
+                    <button type="submit">Entrar</button>
                 </form>
             </div>
         </div>

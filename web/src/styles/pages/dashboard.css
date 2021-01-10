@@ -1,0 +1,18 @@
+#dashboard-page {
+    display: flex;
+    flex-direction: row;
+}
+
+#dashboard-page main {
+    flex: 1;
+}
+
+#dashboard-page .orphanages-container {
+    margin: 64px 208px;
+    height: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 32px;
+}
+  
