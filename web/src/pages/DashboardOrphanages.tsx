@@ -16,7 +16,7 @@ export default function Dashboard() {
     const [orphanages, setOrphanages] = useState<Orphanage[]>([]);
 
     useEffect(() => {
-        api.get('orphanages').then(response => {
+        api.get('orphanages?$filter=(pending=false)').then(response => {
             setOrphanages(response.data);
         })
     }, [])

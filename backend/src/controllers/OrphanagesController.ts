@@ -6,12 +6,12 @@ import * as Yup from 'yup';
 
 export default {
     async index(request: Request, response: Response) {
-        const { filter } = request.query;
+        let { $filter } = request.query;
         const orphanagesRepository = getRepository(Orphanage);
 
         const orphanages = await orphanagesRepository.find({
             relations: ['images'],
-            where: filter
+            where: $filter
         });
 
         return response.json(OrphanageView.renderMany(orphanages));
