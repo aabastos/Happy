@@ -1,0 +1,86 @@
+#delete-orphanage-page {
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #FF669D;
+}
+
+#delete-orphanage-page main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    margin-right: 180px;
+}
+
+#delete-orphanage-page main h1 {
+    font-style: normal;
+    font-weight: 800;
+    font-size: 80px;
+    line-height: 80px;
+
+    margin-bottom: 32px;
+}
+
+#delete-orphanage-page main p {
+    width: 60%;
+
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 34px;
+
+    text-align: center;
+    
+    margin-bottom: 64px;
+}
+
+.confirm-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.confirm-buttons button {
+    width: 10rem;
+    height: 64px;
+
+    padding: 20px 0px;
+
+    background-color: #D6487B;
+    border-radius: 16px;
+    border-style: none;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    font-style: normal;
+    font-weight: 800;
+    font-size: 18px;
+    line-height: 25px;
+    color: white;
+
+    transition: background-color 0.2s;
+}
+
+.confirm-buttons button svg {
+    margin-right: 30px;
+}
+
+.confirm-buttons button:first-child {
+    margin-right: 10px;
+}
+
+.confirm-buttons button:hover {
+    background-color: #e05085;
+    cursor: pointer;
+}

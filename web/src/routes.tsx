@@ -11,6 +11,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import NewPassword from './pages/NewPassword';
 import DashboardOrphanage from './pages/DashboardOrphanages';
 import DashboardPending from './pages/DashboardPending';
+import DeleteOrphanage from './pages/DeleteOrphanages';
 
 function Routes() {
     // function isSignedIn() {
@@ -35,6 +36,7 @@ function Routes() {
                 <Route path="/new-password" component={NewPassword} />
                 <Route path="/dashboard" component={DashboardOrphanage} />
                 <Route path="/dashboard-pending" component={DashboardPending} />
+                <Route path="/delete-orphanage/:id" component={DeleteOrphanage} />
             </Switch>
         </BrowserRouter>
     );

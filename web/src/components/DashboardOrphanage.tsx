@@ -5,6 +5,7 @@ import { FiArrowLeft, FiArrowRight, FiEdit3, FiTrash2 } from 'react-icons/fi';
 import mapIcon from '../utils/mapIcon';
 
 import '../styles/components/dashboardOrphanage.css';
+import { Link } from 'react-router-dom';
 
 interface Orphanage {
     id: number,
@@ -54,12 +55,12 @@ export default function DashboardOrphanage(props: DashboardOrphanageProps) {
                         </div>
                         :
                         <div className="dashboard-orphanage-buttons">
-                            <button type="button">
+                            <Link to="/">
                                 <FiEdit3 size={24} color="#29B6D1" />
-                            </button>
-                            <button type="button">
+                            </Link>
+                            <Link to={`/delete-orphanage/${props.orphanage.id}`}>
                                 <FiTrash2 size={24} color="#29B6D1" />
-                            </button>
+                            </Link>
                         </div>
                 }
             </footer>
