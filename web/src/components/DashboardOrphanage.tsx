@@ -1,6 +1,6 @@
 import React from 'react';
 import { Map, Marker, TileLayer } from 'react-leaflet';
-import { FiArrowLeft } from 'react-icons/fi';
+import { FiArrowLeft, FiArrowRight, FiEdit3, FiTrash2 } from 'react-icons/fi';
 
 import mapIcon from '../utils/mapIcon';
 
@@ -14,7 +14,8 @@ interface Orphanage {
 }
 
 interface DashboardOrphanageProps {
-    orphanage: Orphanage
+    orphanage: Orphanage,
+    pending?: boolean
 }
 
 export default function DashboardOrphanage(props: DashboardOrphanageProps) {
@@ -44,14 +45,23 @@ export default function DashboardOrphanage(props: DashboardOrphanageProps) {
             <footer>
                 <h3>{props.orphanage.name}</h3>
 
-                <div className="dashboard-orphanage-buttons">
-                    <button type="button">
-                        <FiArrowLeft size={24} color="#FFF" />
-                    </button>
-                    <button type="button">
-                        <FiArrowLeft size={24} color="#FFF" />
-                    </button>
-                </div>
+                {
+                    props.pending ?
+                        <div className="dashboard-orphanage-buttons">
+                            <button type="button">
+                                <FiArrowRight size={24} color="#29B6D1" />
+                            </button>
+                        </div>
+                        :
+                        <div className="dashboard-orphanage-buttons">
+                            <button type="button">
+                                <FiEdit3 size={24} color="#29B6D1" />
+                            </button>
+                            <button type="button">
+                                <FiTrash2 size={24} color="#29B6D1" />
+                            </button>
+                        </div>
+                }
             </footer>
         </div>
     )
