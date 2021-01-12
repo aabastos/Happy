@@ -153,5 +153,19 @@ export default {
         const updatedOrphanage = await orphanagesRepository.save(orphanage);
 
         return response.status(202).json(updatedOrphanage);
+    },
+
+    async delete(request: Request, response: Response) {
+        const { id } = request.params;
+
+        const orphanagesRepository = getRepository(Orphanage);
+
+        try {
+            await orphanagesRepository.delete(id);
+
+            return response.status(200).json({ message: "Orfanato removido com sucesso" });
+        } catch (error) {
+            return response.status(400).json({ message: "Erro ao tentar excluir o orfanato!", error: error });
+        }
     }
 }
