@@ -49,16 +49,16 @@ export default function DashboardOrphanage(props: DashboardOrphanageProps) {
                 {
                     props.pending ?
                         <div className="dashboard-orphanage-buttons">
-                            <button type="button">
+                            <Link to={`/dashboard-approve-orphanage/${props.orphanage.id}`}>
                                 <FiArrowRight size={24} color="#29B6D1" />
-                            </button>
+                            </Link>
                         </div>
                         :
                         <div className="dashboard-orphanage-buttons">
-                            <Link to="/">
+                            <Link to={`/dashboard-edit-orphanage/${props.orphanage.id}`}>
                                 <FiEdit3 size={24} color="#29B6D1" />
                             </Link>
-                            <Link to={`/delete-orphanage/${props.orphanage.id}`}>
+                            <Link to={`/dashboard-delete-orphanage/${props.orphanage.id}`}>
                                 <FiTrash2 size={24} color="#29B6D1" />
                             </Link>
                         </div>

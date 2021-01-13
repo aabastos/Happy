@@ -1,20 +1,44 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet';
 
-import { FiPlus } from "react-icons/fi";
+import { FiPlus, FiCheck, FiX } from "react-icons/fi";
 
 import Sidebar from '../components/Sidebar';
 import mapIcon from '../utils/mapIcon';
 import api from "../services/api";
 
-import '../styles/pages/create-orphanage.css';
+import '../styles/pages/edit-orphanage.css';
+
+interface Images {
+    url: string
+}
+
+interface Orphanage {
+    name: string,
+    about: string,
+    latitude: number,
+    longitude: number,
+    instructions: string,
+    opening_hours: string,
+    open_on_weekends: boolean,
+    images: Images[]
+}
+
+interface RouteParams {
+    id: string
+}
 
 export default function CreateOrphanage() {
-    const history = useHistory();
+    const params = useParams<RouteParams>();
+    const { push, location, goBack } = useHistory();
+
+    const [mode, setMode] = useState("create");
+
     const [currentPosition, setCurrentPosition] = useState({ latitude: 0, longitude: 0 });
     const [position, setPosition] = useState({ latitude: 0, longitude: 0 });
+
     const [name, setName] = useState("");
     const [about, setAbout] = useState("");
     const [instructions, setInstructions] = useState("");
@@ -57,7 +81,7 @@ export default function CreateOrphanage() {
         api.post('orphanages', data).then((response) => {
             if (response.status === 201) {
                 alert('Cadastro finalizado com sucesso!');
-                history.push("/app");
+                push("/app");
             } else {
                 alert('Falha na realização do cadastro!');
             }
@@ -66,14 +90,63 @@ export default function CreateOrphanage() {
         event.preventDefault();
     }
 
+    function handleApproveOrphanage() {
+        const { latitude, longitude } = position;
+
+        const data = new FormData();
+        data.append('name', name);
+        data.append('about', about);
+        data.append('instructions', instructions);
+        data.append('latitude', String(latitude));
+        data.append('longitude', String(longitude));
+        data.append('opening_hours', opening_hours);
+        data.append('open_on_weekends', String(open_on_weekends));
+        data.append('pending', String(false));
+
+
+        //TODO: Tratativa de erros e Tela de Sucesso
+        api.put(`orphanages/${params.id}`, data).then(() => goBack());
+    }
+
+    function handleReproveOrphanage() {
+        //TODO: Tratativa de erros e Tela de Sucesso
+        api.delete(`orphanages/${params.id}`).then(() => goBack());
+    }
+
     useEffect(() => {
-        navigator.geolocation.getCurrentPosition((position) => {
-            if (position) {
-                const { latitude, longitude } = position.coords;
-                setCurrentPosition({ latitude, longitude });
-            }
-        })
-    }, [])
+        let m = '';
+
+        if (location.pathname.includes('/orphanages/create')) m = 'create';
+        else if (location.pathname.includes('/dashboard-approve-orphanage')) m = 'approve';
+        else if (location.pathname.includes('/dashboard-edit-orphanage')) m = 'edit';
+        else m = 'create';
+
+        setMode(m);
+
+        if (m === 'create') {
+            navigator.geolocation.getCurrentPosition((position) => {
+                if (position) {
+                    const { latitude, longitude } = position.coords;
+                    setCurrentPosition({ latitude, longitude });
+                }
+            })
+        } else {
+            api.get(`orphanages/${params.id}`).then(response => {
+                // setOrphanage(response.data);
+                const orphanage: Orphanage = response.data;
+
+                setName(orphanage.name);
+                setAbout(orphanage.about);
+                setInstructions(orphanage.instructions);
+                setOpeningHours(orphanage.opening_hours);
+                setOpenOnWeekends(orphanage.open_on_weekends);
+                setPosition({ latitude: orphanage.latitude, longitude: orphanage.longitude });
+                setCurrentPosition({ latitude: orphanage.latitude, longitude: orphanage.longitude });
+                // setImages(orphanage.images)
+                setPreviewImages(orphanage.images.map((image) => image.url))
+            })
+        }
+    }, [location.pathname])
 
     return (
         <div id="page-create-orphanage">
@@ -191,9 +264,24 @@ export default function CreateOrphanage() {
                         </div>
                     </fieldset>
 
-                    <button className="confirm-button" type="submit">
-                        Confirmar
-          </button>
+                    {
+                        mode === 'create' || mode === 'edit' ?
+                            <button className="confirm-button" type="submit">
+                                Confirmar
+                            </button>
+                            :
+                            <div className="approve-buttons">
+                                <button className="reprove-button" type="button" onClick={handleReproveOrphanage}>
+                                    <FiX size={24} color={'white'} style={{ marginRight: 10 }} />
+                                    Reprovar
+                                </button>
+
+                                <button className="approve-button" type="button" onClick={handleApproveOrphanage}>
+                                    <FiCheck size={24} color={'white'} style={{ marginRight: 10 }} />
+                                    Aprovar
+                                </button>
+                            </div>
+                    }
                 </form>
             </main>
         </div>
