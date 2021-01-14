@@ -48,7 +48,7 @@ export default function Orphanage() {
 
             <main>
                 <div className="orphanage-details">
-                    <img src={orphanage.images[activeImageIndex].url} alt="Lar das meninas" />
+                    <img src={orphanage.images[activeImageIndex]?.url} alt="Lar das meninas" />
 
                     <div className="images">
                         {
