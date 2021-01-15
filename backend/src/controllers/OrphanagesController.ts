@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
-import { getRepository, UpdateDateColumn } from 'typeorm';
+import { getRepository } from 'typeorm';
 import Orphanage from '../models/Orphanage';
+import Image from '../models/Image';
 import OrphanageView from '../views/orphanages_view';
 import * as Yup from 'yup';
 
@@ -99,6 +100,7 @@ export default {
         } = request.body;
 
         const orphanagesRepository = getRepository(Orphanage);
+        const imagesRepository = getRepository(Image);
 
         const requestImages = request.files as Express.Multer.File[];
         const images = requestImages.map(image => {
@@ -149,10 +151,14 @@ export default {
         orphanage.opening_hours = data.opening_hours || orphanage.opening_hours;
         orphanage.open_on_weekends = open_on_weekends ? data.open_on_weekends : orphanage.open_on_weekends;
         orphanage.pending = pending ? data.pending : orphanage.pending;
+        orphanage.images.push(...images.map(image => imagesRepository.create(image)));
 
-        const updatedOrphanage = await orphanagesRepository.save(orphanage);
-
-        return response.status(202).json(updatedOrphanage);
+        try {
+            const updatedOrphanage = await orphanagesRepository.save(orphanage);
+            return response.status(202).json(updatedOrphanage);
+        } catch (err) {
+            return response.status(401).json({ message: 'Erro ao tentar atualizar o orfanato', errorDetail: err });
+        }
     },
 
     async delete(request: Request, response: Response) {
