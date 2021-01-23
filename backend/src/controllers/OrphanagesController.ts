@@ -168,6 +168,7 @@ export default {
         const { id } = request.params;
 
         const orphanagesRepository = getRepository(Orphanage);
+        const imagesRepository = getRepository(Image);
 
         try {
             const orphanage = await orphanagesRepository.findOneOrFail(id, {
@@ -176,6 +177,8 @@ export default {
 
             orphanage?.images.forEach(image => {
                 fs.unlink(path.join(__dirname, "..", "..", "uploads", image.path), () => { });
+
+                imagesRepository.delete(image.id);
             });
 
             await orphanagesRepository.delete(id);

@@ -61,8 +61,8 @@ export default function CreateOrphanage() {
         if (!fileList) return null;
 
         const selectedImages = Array.from(fileList)
-        setImages(selectedImages);
-        setPreviewImages(selectedImages.map(image => URL.createObjectURL(image)))
+        setImages([...images, ...selectedImages]);
+        setPreviewImages([...previewImages, ...selectedImages.map(image => URL.createObjectURL(image))])
     }
 
     function handleSubmit(event: FormEvent) {
@@ -78,14 +78,17 @@ export default function CreateOrphanage() {
         data.append('open_on_weekends', String(open_on_weekends));
         images.forEach(image => data.append('images', image));
 
-        api.post('orphanages', data).then((response) => {
-            if (response.status === 201) {
-                alert('Cadastro finalizado com sucesso!');
-                push("/app");
-            } else {
-                alert('Falha na realização do cadastro!');
-            }
-        })
+        if (mode === 'create')
+            api.post('orphanages', data).then((response) => {
+                if (response.status === 201) {
+                    alert('Cadastro finalizado com sucesso!');
+                    push("/app");
+                } else {
+                    alert('Falha na realização do cadastro!');
+                }
+            })
+        else if (mode === 'edit')
+            api.put(`orphanages/${params.id}`, data).then(() => goBack());
 
         event.preventDefault();
     }
