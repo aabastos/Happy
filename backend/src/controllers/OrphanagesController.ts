@@ -4,6 +4,9 @@ import Orphanage from '../models/Orphanage';
 import Image from '../models/Image';
 import OrphanageView from '../views/orphanages_view';
 import * as Yup from 'yup';
+import path from 'path';
+
+import fs from 'fs';
 
 export default {
     async index(request: Request, response: Response) {
@@ -167,6 +170,14 @@ export default {
         const orphanagesRepository = getRepository(Orphanage);
 
         try {
+            const orphanage = await orphanagesRepository.findOneOrFail(id, {
+                relations: ['images']
+            });
+
+            orphanage?.images.forEach(image => {
+                fs.unlink(path.join(__dirname, "..", "..", "uploads", image.path), () => { });
+            });
+
             await orphanagesRepository.delete(id);
 
             return response.status(200).json({ message: "Orfanato removido com sucesso" });
