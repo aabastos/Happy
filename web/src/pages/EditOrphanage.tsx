@@ -12,7 +12,8 @@ import api from "../services/api";
 import '../styles/pages/edit-orphanage.css';
 
 interface Images {
-    url: string
+    url: string,
+    id: string
 }
 
 interface Orphanage {
@@ -30,6 +31,12 @@ interface RouteParams {
     id: string
 }
 
+interface PreviewImage {
+    url: string,
+    id: string,
+    newImageIndex?: number
+}
+
 export default function CreateOrphanage() {
     const params = useParams<RouteParams>();
     const { push, location, goBack } = useHistory();
@@ -45,7 +52,7 @@ export default function CreateOrphanage() {
     const [opening_hours, setOpeningHours] = useState("");
     const [open_on_weekends, setOpenOnWeekends] = useState(true);
     const [images, setImages] = useState<File[]>([]);
-    const [previewImages, setPreviewImages] = useState<string[]>([]);
+    const [previewImages, setPreviewImages] = useState<PreviewImage[]>([]);
 
     function handleMapClicker(event: LeafletMouseEvent) {
         const { lat, lng } = event.latlng;
@@ -62,7 +69,13 @@ export default function CreateOrphanage() {
 
         const selectedImages = Array.from(fileList)
         setImages([...images, ...selectedImages]);
-        setPreviewImages([...previewImages, ...selectedImages.map(image => URL.createObjectURL(image))])
+        setPreviewImages([...previewImages, ...selectedImages.map(image => {
+            return {
+                url: URL.createObjectURL(image),
+                id: 'new',
+                newImageIndex: images.length
+            }
+        })])
     }
 
     function handleSubmit(event: FormEvent) {
@@ -116,6 +129,22 @@ export default function CreateOrphanage() {
         api.delete(`orphanages/${params.id}`).then(() => goBack());
     }
 
+    function handleRemoveImage(image: PreviewImage, index: number) {
+        if (image.id === 'new') {
+            images.splice(image.newImageIndex || 0, 1);
+            previewImages.splice(index, 1);
+            setImages([...images]);
+            setPreviewImages([...previewImages]);
+        } else {
+            api.delete(`images/${image.id}`).then((response) => {
+                if (response.status === 200) {
+                    previewImages.splice(index, 1);
+                    setPreviewImages([...previewImages]);
+                }
+            })
+        }
+    }
+
     useEffect(() => {
         let m = '';
 
@@ -145,8 +174,12 @@ export default function CreateOrphanage() {
                 setOpenOnWeekends(orphanage.open_on_weekends);
                 setPosition({ latitude: orphanage.latitude, longitude: orphanage.longitude });
                 setCurrentPosition({ latitude: orphanage.latitude, longitude: orphanage.longitude });
-                // setImages(orphanage.images)
-                setPreviewImages(orphanage.images.map((image) => image.url))
+                setPreviewImages(orphanage.images.map((image) => {
+                    return {
+                        url: image.url,
+                        id: image.id
+                    }
+                }));
             })
         }
     }, [location.pathname])
@@ -203,8 +236,13 @@ export default function CreateOrphanage() {
 
                             <div className="images-container">
                                 {
-                                    previewImages.map(image => {
-                                        return <img key={image} src={image} alt={name} />
+                                    previewImages.map((image, index) => {
+                                        return (
+                                            <div key={`${image.url}div`} className="image-container">
+                                                <button type="button" key={`${image.url}button`} onClick={() => handleRemoveImage(image, index)}>x</button>
+                                                <img key={`${image.url}image`} src={image.url} alt={name} />
+                                            </div>
+                                        )
                                     })
                                 }
                                 <label htmlFor="image[]" className="new-image">
