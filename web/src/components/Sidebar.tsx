@@ -1,17 +1,28 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Context } from '../contexts/AuthContext';
+
 import { Link, useHistory } from 'react-router-dom';
 import { FiArrowLeft, FiAlertCircle, FiMapPin, FiLogOut } from 'react-icons/fi';
 
 import mapMarkerImg from '../images/map-marker.svg';
 
 import '../styles/components/sidebar.css';
+import api from '../services/api';
 
 interface SidebarProps {
     dashboard?: boolean
     selectedMenu?: Number
 }
 export default function Sidebar(props: SidebarProps) {
-    const { goBack, push } = useHistory();
+    const { authenticate } = useContext(Context);
+    const { goBack, push, replace } = useHistory();
+
+    function logout() {
+        authenticate(false);
+        localStorage.removeItem('TOKEN');
+        api.defaults.headers.authorization = undefined;
+        replace("/");
+    }
 
     return (
         <aside className="app-sidebar">
@@ -42,7 +53,7 @@ export default function Sidebar(props: SidebarProps) {
             <footer>
                 {
                     (props.dashboard) ?
-                        <button type="button" onClick={() => push("/")}>
+                        <button type="button" onClick={logout}>
                             <FiLogOut size={24} color="#FFF" />
                         </button>
                         :

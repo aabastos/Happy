@@ -10,12 +10,10 @@ import fs from 'fs';
 
 export default {
     async index(request: Request, response: Response) {
-        let { $filter } = request.query;
         const orphanagesRepository = getRepository(Orphanage);
 
         const orphanages = await orphanagesRepository.find({
-            relations: ['images'],
-            where: $filter
+            relations: ['images']
         });
 
         return response.json(OrphanageView.renderMany(orphanages));
@@ -187,5 +185,27 @@ export default {
         } catch (error) {
             return response.status(400).json({ message: "Erro ao tentar excluir o orfanato!", error: error });
         }
+    },
+
+    async getPendingOrphanages(request: Request, response: Response) {
+        const orphanagesRepository = getRepository(Orphanage);
+
+        const orphanages = await orphanagesRepository.find({
+            relations: ['images'],
+            where: 'pending=true'
+        });
+
+        return response.json(OrphanageView.renderMany(orphanages));
+    },
+
+    async getApprovedOrphanages(request: Request, response: Response) {
+        const orphanagesRepository = getRepository(Orphanage);
+
+        const orphanages = await orphanagesRepository.find({
+            relations: ['images'],
+            where: 'pending=false'
+        });
+
+        return response.json(OrphanageView.renderMany(orphanages));
     }
 }

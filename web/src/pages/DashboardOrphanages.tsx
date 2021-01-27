@@ -14,7 +14,7 @@ interface Orphanage {
 }
 
 export default function Dashboard() {
-    const { location } = useHistory();
+    const { location, replace } = useHistory();
 
     const [pending, setPending] = useState(false);
     const [orphanages, setOrphanages] = useState<Orphanage[]>([]);
@@ -22,8 +22,13 @@ export default function Dashboard() {
     useEffect(() => {
         const state = location.pathname === '/dashboard-pending';
         setPending(state);
-        api.get(`orphanages?$filter=pending=${state}`).then(response => {
+
+        const route = state ? 'pending-orphanages' : 'approved-orphanages'
+        api.get(route).then(response => {
             setOrphanages(response.data);
+        }, (err) => {
+            alert('Sessão finalizada!');
+            replace('/login');
         })
     }, [location.pathname])
 

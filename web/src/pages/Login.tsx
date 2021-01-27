@@ -1,4 +1,5 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useContext, useEffect, useState } from 'react';
+import { Context } from '../contexts/AuthContext';
 
 import DashboardLanding from '../components/DashboardLanding';
 import DashboardBackButton from '../components/DashboardBackButton';
@@ -9,6 +10,7 @@ import api from '../services/api';
 import { AxiosError, AxiosResponse } from 'axios';
 
 function Login() {
+    const { authenticate, authenticated } = useContext(Context);
     const history = useHistory();
 
     const [email, setEmail] = useState("");
@@ -24,6 +26,10 @@ function Login() {
             (response: AxiosResponse) => {
                 const { token } = response.data;
                 localStorage.setItem("TOKEN", token);
+                api.defaults.headers.authorization = `Bearer ${token}`;
+
+                authenticate(true);
+
                 history.push("/dashboard");
             },
             (error: AxiosError) => {
@@ -31,6 +37,12 @@ function Login() {
             }
         )
     }
+
+    useEffect(() => {
+        if (authenticated) {
+            history.replace("/dashboard");
+        }
+    }, [authenticated]);
 
     return (
         <div id="login-page">

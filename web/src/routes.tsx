@@ -13,16 +13,6 @@ import DashboardOrphanage from './pages/DashboardOrphanages';
 import DeleteOrphanage from './pages/DeleteOrphanages';
 
 function Routes() {
-    // function isSignedIn() {
-    //     const token = localStorage.getItem("TOKEN");
-
-    //     if (token) {
-
-    //     } else {
-    //         return false;
-    //     }
-    // }
-
     return (
         <BrowserRouter>
             <Switch>

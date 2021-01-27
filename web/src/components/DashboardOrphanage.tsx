@@ -1,6 +1,6 @@
 import React from 'react';
 import { Map, Marker, TileLayer } from 'react-leaflet';
-import { FiArrowLeft, FiArrowRight, FiEdit3, FiTrash2 } from 'react-icons/fi';
+import { FiArrowRight, FiEdit3, FiTrash2 } from 'react-icons/fi';
 
 import mapIcon from '../utils/mapIcon';
 
