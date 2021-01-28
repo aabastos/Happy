@@ -39,7 +39,7 @@ interface PreviewImage {
 
 export default function CreateOrphanage() {
     const params = useParams<RouteParams>();
-    const { push, location, goBack } = useHistory();
+    const { replace, push, location, goBack } = useHistory();
 
     const [mode, setMode] = useState("create");
 
@@ -94,8 +94,7 @@ export default function CreateOrphanage() {
         if (mode === 'create')
             api.post('orphanages', data).then((response) => {
                 if (response.status === 201) {
-                    alert('Cadastro finalizado com sucesso!');
-                    push("/app");
+                    replace("/create-success");
                 } else {
                     alert('Falha na realização do cadastro!');
                 }
