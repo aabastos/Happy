@@ -11,6 +11,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import NewPassword from './pages/NewPassword';
 import DashboardOrphanage from './pages/DashboardOrphanages';
 import DeleteOrphanage from './pages/DeleteOrphanages';
+import Success from './pages/Success';
 
 function Routes() {
     return (
@@ -28,6 +29,7 @@ function Routes() {
                 <Route path="/dashboard-approve-orphanage/:id" component={EditOrphanage} />
                 <Route path="/dashboard-edit-orphanage/:id" component={EditOrphanage} />
                 <Route path="/dashboard-delete-orphanage/:id" component={DeleteOrphanage} />
+                <Route path="/create-success" component={Success} />
             </Switch>
         </BrowserRouter>
     );
