@@ -16,6 +16,62 @@ Página inicial do aplicativo para acesso ao mapa contendo os orfanatos e para a
 
 ![Pagina Inicial](https://github.com/aabastos/Happy/blob/master/web/prints/landing.png)
 
+## Mapa
+
+Página que lista, em um mapa, os orfanatos cadastrados (e aprovados) com a sua determinada localização
+
+![Mapa](https://github.com/aabastos/Happy/blob/master/web/prints/map.png)
+
+## Cadastro de Orfanatos
+
+Página para o cadastramento de um orfanato, oferecendo a possibilidade e inserir a localização, nome, sobre, instruções de visita, horário de visita, atendimentos aos finais de semanas e imagens do orfanato.
+
+![Adicionar Orfanato](https://github.com/aabastos/Happy/blob/master/web/prints/add-orphanage-1.png)
+![Adicionar Orfanato](https://github.com/aabastos/Happy/blob/master/web/prints/add-orphanage-2.png)
+
+## Cadastro de Orfanatos - Sucesso
+
+Página que é apresentado ao usuário quando o processo de cadastramento do orfanato é feito com sucesso.
+
+![Adicionar Orfanato - Sucesso](https://github.com/aabastos/Happy/blob/master/web/prints/add-orphanage-success.png)
+
+## Detalhes do orfanato
+
+Página que lista os detalhes do orfanato, tais como instruções de visitação, atendimento aos finais de semana, localização, etc.
+
+![Detalhe 1](https://github.com/aabastos/Happy/blob/master/web/prints/orphanage-detail-1.png)
+![Detalhe 1](https://github.com/aabastos/Happy/blob/master/web/prints/orphanage-detail-2.png)
+
+## Login
+
+Página para realização do login para acesso à área restrita do sistema (Dashboard)
+
+![Login](https://github.com/aabastos/Happy/blob/master/web/prints/login.png)
+
+## Dashboard - Orfanatos Aprovados
+
+Página do Dashboard onde são listados os orfanatos aprovados. Deste orfanatos aprovados, é possível realizar a edição de um orfanato e também é possível fazer a remoção de um orfanato.
+
+![Orfanatos Aprovados](https://github.com/aabastos/Happy/blob/master/web/prints/approved-orphanages.png)
+
+## Dashboard - Orfanatos Pendentes
+
+Página do Dashboard onde são listados os orfanatos que estão pendentes de aprovação.
+
+![Orfanatos Pendentes](https://github.com/aabastos/Happy/blob/master/web/prints/to-approve-orphanages.png)
+
+## Dashboard - Aprovação do Orfanato
+
+Página para aprovação do orfanato. É mostrado as informações inseridas pelo usuário (podendo ser editadas pelo administrador) e as opções para Aprovação e Reprovação do Orfanato.
+
+![Aprovação de Orfanato](https://github.com/aabastos/Happy/blob/master/web/prints/orphanage-edit.png)
+
+## Dashboard - Remoção de Orfanato
+
+Página para confirmação da remoção de um determinado Orfanato.
+
+![Remoção de Orfanato](https://github.com/aabastos/Happy/blob/master/web/prints/orphanage-remove.png)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
