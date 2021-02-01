@@ -42,7 +42,8 @@ export default function OrphanagesMap() {
     }
 
     useEffect(() => {
-        api.get("/orphanages").then(response => {
+        api.get("/orphanages?$filter=pending=false").then(response => {
+            console.log(response)
             setOrphanages(response.data);
         })
     }, []);

@@ -62,7 +62,7 @@ export default function OrphanageDetails() {
                                 <Image
                                     key={image.id}
                                     style={styles.image}
-                                    source={{ uri: image.url.replace('localhost', '192.168.1.117') }}
+                                    source={{ uri: image.url.replace('localhost', '192.168.1.111') }}
                                 />
                             )
                         })
