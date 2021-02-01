@@ -1,3 +1,21 @@
+# Happy
+
+Aplicação WEB desenvolvida inicialmente através do Next Level Week 3.0, curso online gratuito oferecido pelo RocketSeat durante o período de 12 de agosto de 2020 à 16 de agosto de 2020. Foi aprimorado por conta própria com o passar do tempo. Entre os aprimoramentos, temos:
+
+- Autenticação 
+- Gerenciamento de Sessão utilizando **JWT**
+- Update de dados no backend através de interações do usuário
+- Melhor gerenciamento do upload de imagens presentes no cadastro dos orfanatos
+- Remoção de orfanatos
+- Localização em tempo real
+- Entre outras...
+
+## Página inicial
+
+Página inicial do aplicativo para acesso ao mapa contendo os orfanatos e para acesso à parte restrita do sistema.
+
+![Pagina Inicial](https://github.com/aabastos/Happy/blob/master/web/prints/landing.png)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
