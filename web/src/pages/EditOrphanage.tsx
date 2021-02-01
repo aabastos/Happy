@@ -161,6 +161,7 @@ export default function CreateOrphanage() {
                 if (position) {
                     const { latitude, longitude } = position.coords;
                     setCurrentPosition({ latitude, longitude });
+                    setPosition({ latitude, longitude });
                 }
             })
         } else {

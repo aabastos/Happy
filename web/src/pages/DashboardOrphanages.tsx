@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Sidebar from '../components/Sidebar';
 import DashboardOrphanage from '../components/DashboardOrphanage';
 
 import '../styles/pages/dashboard.css';
 import api from '../services/api';
 import { useHistory } from 'react-router-dom';
+
+import { Context } from '../contexts/AuthContext';
 
 interface Orphanage {
     id: number,
@@ -14,6 +16,7 @@ interface Orphanage {
 }
 
 export default function Dashboard() {
+    const { authenticate } = useContext(Context);
     const { location, replace } = useHistory();
 
     const [pending, setPending] = useState(false);
@@ -28,6 +31,7 @@ export default function Dashboard() {
             setOrphanages(response.data);
         }, (err) => {
             alert('Sessão finalizada!');
+            authenticate(false);
             replace('/login');
         })
     }, [location.pathname])
