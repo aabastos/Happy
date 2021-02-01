@@ -35,6 +35,7 @@ export default function Sidebar(props: SidebarProps) {
                             to="/dashboard"
                             type="button"
                             style={props.selectedMenu === 0 ? { backgroundColor: '#FFD666' } : {}}
+                            replace
                         >
                             <FiMapPin size={24} color="#0089A5" />
                         </Link>
@@ -43,6 +44,7 @@ export default function Sidebar(props: SidebarProps) {
                             to="/dashboard-pending"
                             type="button"
                             style={props.selectedMenu === 1 ? { backgroundColor: '#FFD666' } : {}}
+                            replace
                         >
                             <FiAlertCircle size={24} color="#0089A5" />
                         </Link>

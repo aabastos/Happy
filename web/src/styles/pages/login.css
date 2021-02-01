@@ -50,8 +50,9 @@
 
 #login-page .login-inputs form .input-block label span {
     font-size: 14px;
-    color: #8FA7B3;
-    margin-left: 24px;
+    color: #FF669D;
+    margin-left: auto;
+    margin-right: 10px;
     line-height: 24px;
 }
 

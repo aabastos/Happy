@@ -22,7 +22,7 @@ function OrphanagesMap() {
     const [orphanages, setOrphanages] = useState<Orphanage[]>([]);
 
     useEffect(() => {
-        api.get('approved-orphanages').then(response => {
+        api.get('orphanages?$filter=pending=false').then(response => {
             setOrphanages(response.data);
         })
     }, [])

@@ -10,10 +10,12 @@ import fs from 'fs';
 
 export default {
     async index(request: Request, response: Response) {
+        let { $filter } = request.query;
         const orphanagesRepository = getRepository(Orphanage);
 
         const orphanages = await orphanagesRepository.find({
-            relations: ['images']
+            relations: ['images'],
+            where: $filter
         });
 
         return response.json(OrphanageView.renderMany(orphanages));

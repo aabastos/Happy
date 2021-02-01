@@ -66,11 +66,11 @@ export default {
 
             const user = await userRepository.findOne(email);
 
-            if (!user) return response.status(400).json({ message: "Email não cadastrado" });
+            if (!user) return response.status(400).json({ message: "Email não cadastrado", error: 'invalid-email' });
 
             console.log(password);
 
-            if (!(user.compareHash(password))) return response.status(401).json({ message: 'Senha inválida' });
+            if (!(user.compareHash(password))) return response.status(401).json({ message: 'Senha inválida', error: 'invalid-password' });
 
             return response.status(200).json({ token: user.generateToken() });
         } catch (err) {

@@ -15,9 +15,16 @@ function Login() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [remember, setRemember] = useState(false);
+
+    const [invalidEmail, setInvalidEmail] = useState(false);
+    const [invalidPassword, setInvalidPassword] = useState(false);
 
     function handleLogin(evt: FormEvent) {
         evt.preventDefault();
+
+        setInvalidEmail(false);
+        setInvalidPassword(false);
 
         api.post('authenticate', {
             email: email,
@@ -25,15 +32,17 @@ function Login() {
         }).then(
             (response: AxiosResponse) => {
                 const { token } = response.data;
-                localStorage.setItem("TOKEN", token);
+                if (remember) localStorage.setItem("TOKEN", token);
                 api.defaults.headers.authorization = `Bearer ${token}`;
 
                 authenticate(true);
 
                 history.push("/dashboard");
             },
-            (error: AxiosError) => {
-                alert(error.response?.data.message);
+            (err: AxiosError) => {
+                const { error } = err.response?.data;
+                if (error === 'invalid-email') setInvalidEmail(true);
+                else if (error === 'invalid-password') setInvalidPassword(true);
             }
         )
     }
@@ -54,7 +63,7 @@ function Login() {
                     <fieldset>
                         <legend>Fazer login</legend>
                         <div className="input-block">
-                            <label htmlFor="name">Email</label>
+                            <label htmlFor="name">Email {invalidEmail ? <span>Email invalido</span> : null} </label>
                             <input
                                 type="email"
                                 id="email"
@@ -63,7 +72,7 @@ function Login() {
                             />
                         </div>
                         <div className="input-block">
-                            <label htmlFor="name">Senha</label>
+                            <label htmlFor="name">Senha {invalidPassword ? <span>Senha incorreta</span> : null} </label>
                             <input
                                 type="password"
                                 id="password"
@@ -73,7 +82,12 @@ function Login() {
                         </div>
                         <div>
                             <div className="checkbox">
-                                <input type="checkbox" id="remember" />
+                                <input
+                                    type="checkbox"
+                                    id="remember"
+                                    checked={remember}
+                                    onChange={(evt) => setRemember(evt.currentTarget.checked)}
+                                />
                                 <label htmlFor="remember">Lembrar-me</label>
                             </div>
 
