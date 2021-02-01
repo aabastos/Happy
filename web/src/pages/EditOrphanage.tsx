@@ -98,6 +98,8 @@ export default function CreateOrphanage() {
                 } else {
                     alert('Falha na realização do cadastro!');
                 }
+            }, (err) => {
+                alert('Erro ao tentar cadastrar o orfanato. Verifique os dados preenchidos e tente novamente!');
             })
         else if (mode === 'edit')
             api.put(`orphanages/${params.id}`, data).then(() => goBack());
