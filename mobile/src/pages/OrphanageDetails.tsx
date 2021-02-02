@@ -5,6 +5,7 @@ import { RectButton, TouchableOpacity } from 'react-native-gesture-handler';
 import { Feather, FontAwesome } from '@expo/vector-icons';
 import { useRoute } from '@react-navigation/native';
 
+//@ts-ignore
 import mapMarkerImg from '../images/map-marker.png';
 
 import api from '../services/api';
@@ -13,7 +14,7 @@ interface Parameters {
     orphanage_id: number;
 }
 
-interface Image {
+interface ImageInterface {
     id: number,
     url: string
 }
@@ -26,7 +27,7 @@ interface Orphanage {
     instructions: string,
     opening_hours: string,
     open_on_weekends: boolean,
-    images: Image[]
+    images: ImageInterface[]
 }
 
 export default function OrphanageDetails() {
@@ -45,8 +46,6 @@ export default function OrphanageDetails() {
 
         api.get(`orphanages/${orphanage_id}`).then(response => {
             setOrphanage(response.data);
-
-            console.log(response.data);
         })
     }, []);
 

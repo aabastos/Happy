@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Dimensions, StatusBar } from 'react-native';
 import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { RectButton } from 'react-native-gesture-handler';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 import { Feather } from '@expo/vector-icons'
+
+//@ts-ignore
 import mapMarker from '../images/map-marker.png';
 
 import api from '../services/api';
@@ -31,7 +33,7 @@ export default function OrphanagesMap() {
 
     const [orphanages, setOrphanages] = useState<Orphanage[]>([]);
 
-    function handleOrphanageDetailNavigation(orphanage_id: string) {
+    function handleOrphanageDetailNavigation(orphanage_id: number) {
         navigation.navigate('OrphanageDetail', {
             orphanage_id
         });
@@ -43,7 +45,6 @@ export default function OrphanagesMap() {
 
     useEffect(() => {
         api.get("/orphanages?$filter=pending=false").then(response => {
-            console.log(response)
             setOrphanages(response.data);
         })
     }, []);
@@ -93,7 +94,7 @@ export default function OrphanagesMap() {
                     <Feather name='plus' size={20} color='#FFF' />
                 </RectButton>
             </View>
-            <StatusBar style="auto" />
+            <StatusBar />
         </View>
     )
 }

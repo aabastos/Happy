@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+
+import { Context } from './contexts/Context';
 
 import OrphanagesMap from './pages/OrphanagesMap';
 import OrphanageDetail from './pages/OrphanageDetails';
@@ -9,6 +11,7 @@ import OrphanageData from './pages/CreateOrphanage/OrphanageData';
 import Header from './components/Header';
 
 export default function Routes() {
+    const { selectMapHeaderVisible } = useContext(Context);
     const { Navigator, Screen } = createStackNavigator();
     return (
         <NavigationContainer>
@@ -31,7 +34,7 @@ export default function Routes() {
                     name="SelectMapPosition"
                     component={SelectMapPosition}
                     options={{
-                        headerShown: true,
+                        headerShown: selectMapHeaderVisible,
                         header: () => <Header cancelButton={true} title="Selecione no mapa" />
                     }}
                 />
