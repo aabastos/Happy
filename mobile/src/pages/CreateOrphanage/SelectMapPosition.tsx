@@ -21,7 +21,7 @@ export default function SelectMapPosition() {
     const [instructionVisible, setInstructionVisible] = useState(true);
 
     function handleNextStep() {
-        navigation.navigate('OrphanageData', {
+        navigation.navigate('OrphanageData1', {
             position: position
         });
     }

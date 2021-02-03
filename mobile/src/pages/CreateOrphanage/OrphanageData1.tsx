@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView, View, StyleSheet, Switch, Text, TextInput, TouchableOpacity, Image } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { RectButton } from 'react-native-gesture-handler';
@@ -14,7 +14,7 @@ interface Params {
     }
 }
 
-export default function OrphanageData() {
+export default function OrphanageData1() {
     const navigation = useNavigation();
 
     const route = useRoute();
@@ -22,47 +22,17 @@ export default function OrphanageData() {
 
     const [name, setName] = useState("");
     const [about, setAbout] = useState("");
-    const [instructions, setInstructions] = useState("");
-    const [opening_hours, setOpeningHours] = useState("");
-    const [open_on_weekends, setOpenOnWeekends] = useState(true);
     const [images, setImages] = useState<string[]>([]);
 
-    function handleSaveOrphanage() {
-        const { latitude, longitude } = params.position;
-        console.log({
+    const [allDataSetted, setAllDataSetted] = useState(false);
+
+    function handleNext() {
+        navigation.navigate('OrphanageData2', {
+            position: params.position,
             name,
             about,
-            instructions,
-            opening_hours,
-            open_on_weekends,
-            latitude,
-            longitude
-        })
-
-        const data = new FormData();
-        data.append('name', name);
-        data.append('about', about);
-        data.append('instructions', instructions);
-        data.append('latitude', String(latitude));
-        data.append('longitude', String(longitude));
-        data.append('opening_hours', opening_hours);
-        data.append('open_on_weekends', String(open_on_weekends));
-        images.forEach((image, index) => {
-            data.append('images', {
-                name: `image_${index}.jpg`,
-                type: 'image/jpg',
-                uri: image
-            } as any)
+            images
         });
-
-        api.post('orphanages', data).then((response) => {
-            if (response.status === 201) {
-                alert('Cadastro finalizado com sucesso!');
-                navigation.navigate("OrphanagesMap");
-            } else {
-                alert('Falha na realização do cadastro!');
-            }
-        })
     }
 
     async function handleSelectImages() {
@@ -83,6 +53,11 @@ export default function OrphanageData() {
 
         setImages([...images, result.uri]);
     }
+
+    useEffect(() => {
+        if (name !== '' && about !== '' && images.length > 0) setAllDataSetted(true);
+        else setAllDataSetted(false);
+    }, [name, about, images]);
 
     return (
         <ScrollView style={styles.container} contentContainerStyle={{ padding: 24 }}>
@@ -126,35 +101,8 @@ export default function OrphanageData() {
                 <Feather name="plus" size={24} color="#15B6D6" />
             </TouchableOpacity>
 
-            <Text style={styles.title}>Visitação</Text>
-
-            <Text style={styles.label}>Instruções</Text>
-            <TextInput
-                style={[styles.input, { height: 110 }]}
-                multiline
-                value={instructions}
-                onChangeText={(text) => setInstructions(text)}
-            />
-
-            <Text style={styles.label}>Horario de visitas</Text>
-            <TextInput
-                style={styles.input}
-                value={opening_hours}
-                onChangeText={(text) => setOpeningHours(text)}
-            />
-
-            <View style={styles.switchContainer}>
-                <Text style={styles.label}>Atende final de semana?</Text>
-                <Switch
-                    thumbColor="#fff"
-                    trackColor={{ false: '#ccc', true: '#39CC83' }}
-                    value={open_on_weekends}
-                    onValueChange={() => setOpenOnWeekends(!open_on_weekends)}
-                />
-            </View>
-
-            <RectButton style={styles.nextButton} onPress={handleSaveOrphanage}>
-                <Text style={styles.nextButtonText}>Cadastrar</Text>
+            <RectButton style={{ ...styles.nextButton, opacity: allDataSetted ? 1 : 0.5 }} onPress={handleNext} enabled={allDataSetted}>
+                <Text style={styles.nextButtonText}>Próximo</Text>
             </RectButton>
         </ScrollView>
     )
@@ -220,20 +168,13 @@ const styles = StyleSheet.create({
         marginBottom: 32,
     },
 
-    switchContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        marginTop: 16,
-    },
-
     nextButton: {
         backgroundColor: '#15c3d6',
         borderRadius: 20,
         justifyContent: 'center',
         alignItems: 'center',
         height: 56,
-        marginTop: 32,
+        marginTop: 32
     },
 
     nextButtonText: {
