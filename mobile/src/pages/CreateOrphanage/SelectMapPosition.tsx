@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, StyleSheet, Dimensions, Text, Image } from 'react-native';
-
-import { Context } from '../../contexts/Context';
-
 import { useNavigation } from '@react-navigation/native';
 import { RectButton, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import MapView, { MapEvent, Marker } from 'react-native-maps';
+import * as Location from 'expo-location';
+
+import { Context } from '../../contexts/Context';
 
 //@ts-ignore
 import mapMarkerImg from '../../images/map-marker.png';
@@ -15,6 +15,7 @@ import cursorImg from '../../images/cursor.png';
 export default function SelectMapPosition() {
     const { setMapHeaderVisibility } = useContext(Context);
     const navigation = useNavigation();
+    const [currentPosition, setCurrentPosition] = useState({ latitude: 0, longitude: 0 })
     const [position, setPosition] = useState({ latitude: 0, longitude: 0 });
 
     const [positionSelected, setPositionSelected] = useState(false);
@@ -38,6 +39,22 @@ export default function SelectMapPosition() {
 
     useEffect(() => {
         setMapHeaderVisibility(false);
+
+        (async () => {
+            const { status } = await Location.requestPermissionsAsync();
+
+            if (status !== 'granted') {
+                alert('Eita, precisamos de ter permissão para uso de sua localização...');
+                return;
+            }
+
+            const location = await Location.getCurrentPositionAsync({});
+            console.log(location);
+            setCurrentPosition({
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude
+            });
+        })();
     }, [])
 
     return (
@@ -56,25 +73,30 @@ export default function SelectMapPosition() {
                     : null
             }
 
-            <MapView
-                initialRegion={{
-                    latitude: -19.8323469,
-                    longitude: -43.9399492,
-                    latitudeDelta: 0.008,
-                    longitudeDelta: 0.008,
-                }}
-                style={styles.mapStyle}
-                onPress={handleSelectMapPosition}
-            >
-                {
-                    (position.latitude !== 0 || position.longitude !== 0) && (
-                        <Marker
-                            icon={mapMarkerImg}
-                            coordinate={{ latitude: position.latitude, longitude: position.longitude }}
-                        />
-                    )
-                }
-            </MapView>
+            {
+                (currentPosition.latitude === 0 && currentPosition.longitude === 0) ?
+                    <View />
+                    :
+                    <MapView
+                        initialRegion={{
+                            latitude: currentPosition.latitude,
+                            longitude: currentPosition.longitude,
+                            latitudeDelta: 0.008,
+                            longitudeDelta: 0.008,
+                        }}
+                        style={styles.mapStyle}
+                        onPress={handleSelectMapPosition}
+                    >
+                        {
+                            (position.latitude !== 0 || position.longitude !== 0) && (
+                                <Marker
+                                    icon={mapMarkerImg}
+                                    coordinate={{ latitude: position.latitude, longitude: position.longitude }}
+                                />
+                            )
+                        }
+                    </MapView>
+            }
 
             {
                 positionSelected ? (

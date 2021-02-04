@@ -49,9 +49,8 @@ export default function OrphanageData1() {
             mediaTypes: ImagePicker.MediaTypeOptions.Images
         });
 
-        if (result.cancelled) return;
-
-        setImages([...images, result.uri]);
+        if (result.cancelled === false) setImages([...images, result.uri]);
+        else return;
     }
 
     function removeImage(index: number) {
@@ -66,7 +65,13 @@ export default function OrphanageData1() {
 
     return (
         <ScrollView style={styles.container} contentContainerStyle={{ padding: 24 }}>
-            <Text style={styles.title}>Dados</Text>
+            <View style={styles.subHeaderContainer}>
+                <Text style={styles.title}>Dados</Text>
+                <View style={styles.indexContainer}>
+                    <Text style={styles.index}>01</Text>
+                    <Text style={{ ...styles.index, opacity: 0.4 }}> - 02</Text>
+                </View>
+            </View>
 
             <Text style={styles.label}>Nome</Text>
             <TextInput
@@ -131,13 +136,33 @@ const styles = StyleSheet.create({
         flex: 1,
     },
 
-    title: {
-        color: '#5c8599',
-        fontSize: 24,
+    subHeaderContainer: {
         marginBottom: 32,
         paddingBottom: 24,
         borderBottomWidth: 0.8,
-        borderBottomColor: '#D3E2E6'
+        borderBottomColor: '#D3E2E6',
+
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+
+    },
+
+    indexContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+
+    title: {
+        color: '#5c8599',
+        fontSize: 24
+    },
+
+    index: {
+        color: '#5c8599',
+        fontSize: 16,
+        fontWeight: 'bold'
     },
 
     label: {
