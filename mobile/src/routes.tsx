@@ -9,6 +9,8 @@ import OrphanageDetail from './pages/OrphanageDetails';
 import SelectMapPosition from './pages/CreateOrphanage/SelectMapPosition';
 import OrphanageData1 from './pages/CreateOrphanage/OrphanageData1';
 import OrphanageData2 from './pages/CreateOrphanage/OrphanageData2';
+import Success from './pages/CreateOrphanage/Success';
+import CreateCancel from './pages/CreateOrphanage/CreateCancel';
 import Header from './components/Header';
 
 export default function Routes() {
@@ -55,6 +57,22 @@ export default function Routes() {
                     options={{
                         headerShown: true,
                         header: () => <Header cancelButton={true} title="Preencha os dados" />
+                    }}
+                />
+
+                <Screen
+                    name='Success'
+                    component={Success}
+                    options={{
+                        headerShown: false
+                    }}
+                />
+
+                <Screen
+                    name='CreateCancel'
+                    component={CreateCancel}
+                    options={{
+                        headerShown: false
                     }}
                 />
             </Navigator>

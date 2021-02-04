@@ -48,8 +48,7 @@ export default function OrphanageData2() {
 
         api.post('orphanages', data).then((response) => {
             if (response.status === 201) {
-                alert('Cadastro finalizado com sucesso!');
-                navigation.navigate("OrphanagesMap");
+                navigation.navigate('Success');
             } else {
                 alert('Falha na realização do cadastro!');
             }

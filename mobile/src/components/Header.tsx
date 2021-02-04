@@ -13,7 +13,7 @@ export default function Header(props: Props) {
     const navigation = useNavigation();
 
     function handleGoBackToHomeScreen() {
-        navigation.navigate('OrphanagesMap');
+        navigation.navigate('CreateCancel');
     }
 
     return (
