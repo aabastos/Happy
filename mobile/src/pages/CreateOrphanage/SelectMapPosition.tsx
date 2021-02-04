@@ -49,7 +49,6 @@ export default function SelectMapPosition() {
             }
 
             const location = await Location.getCurrentPositionAsync({});
-            console.log(location);
             setCurrentPosition({
                 latitude: location.coords.latitude,
                 longitude: location.coords.longitude
