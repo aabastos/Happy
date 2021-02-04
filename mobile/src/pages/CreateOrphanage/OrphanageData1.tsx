@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView, View, StyleSheet, Switch, Text, TextInput, TouchableOpacity, Image } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-import { RectButton } from 'react-native-gesture-handler';
+import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import * as ImagePicker from 'expo-image-picker';
-import api from '../../services/api';
 
 interface Params {
     position: {
@@ -54,6 +54,11 @@ export default function OrphanageData1() {
         setImages([...images, result.uri]);
     }
 
+    function removeImage(index: number) {
+        images.splice(index, 1);
+        setImages([...images]);
+    }
+
     useEffect(() => {
         if (name !== '' && about !== '' && images.length > 0) setAllDataSetted(true);
         else setAllDataSetted(false);
@@ -86,13 +91,26 @@ export default function OrphanageData1() {
             <Text style={styles.label}>Fotos</Text>
             <View style={styles.selectedImagesContainer}>
                 {
-                    images.map((image) => {
+                    images.map((image, index) => {
                         return (
-                            <Image
-                                key={image}
-                                source={{ uri: image }}
-                                style={styles.uploadedImage}
-                            />
+                            <LinearGradient
+                                key={`view${image}`}
+                                style={styles.imageContainer}
+                                colors={['rgba(161, 233, 197, 0.5)', 'transparent', 'rgba(214, 72, 123, 0.3)']}
+                                start={{ x: 0.0, y: 1.0 }}
+                                end={{ x: 1.0, y: 1.0 }}
+                                locations={[0, 0.5, 1]}
+                            >
+                                <Image
+                                    key={image}
+                                    source={{ uri: image }}
+                                    style={styles.uploadedImage}
+                                />
+
+                                <BorderlessButton onPress={() => removeImage(index)}>
+                                    <Feather name='x' size={35} color='#D6487B' />
+                                </BorderlessButton>
+                            </LinearGradient>
                         )
                     })
                 }
@@ -145,15 +163,24 @@ const styles = StyleSheet.create({
     },
 
     selectedImagesContainer: {
-        flexDirection: 'row'
+        flexDirection: 'column'
+    },
+
+    imageContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 10,
+
+        borderRadius: 20,
+
+        marginBottom: 8
     },
 
     uploadedImage: {
         width: 64,
         height: 64,
-        borderRadius: 20,
-        marginBottom: 32,
-        marginRight: 8
+        borderRadius: 20
     },
 
     imagesInput: {
