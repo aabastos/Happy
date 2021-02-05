@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import { Context } from './contexts/Context';
 
+import OnboardingScreen from './pages/OnboardingScreen';
 import OrphanagesMap from './pages/OrphanagesMap';
 import OrphanageDetail from './pages/OrphanageDetails';
 import SelectMapPosition from './pages/CreateOrphanage/SelectMapPosition';
@@ -19,6 +20,11 @@ export default function Routes() {
     return (
         <NavigationContainer>
             <Navigator screenOptions={{ headerShown: false }}>
+                <Screen
+                    name='OnboardingScreen'
+                    component={OnboardingScreen}
+                />
+
                 <Screen
                     name="OrphanagesMap"
                     component={OrphanagesMap}
