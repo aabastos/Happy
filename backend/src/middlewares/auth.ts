@@ -13,7 +13,7 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
     const [scheme, token] = authHeader.split(" ");
 
     try {
-        await promisify(jwt.verify)(token, "secret");
+        await promisify(jwt.verify)(token, process.env.JWT_SECRET);
         return next();
     } catch (err) {
         return res.status(401).json({ error: "Token invalid" });

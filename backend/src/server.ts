@@ -9,6 +9,8 @@ import './database/connection';
 import routes from './routes';
 import errorHandler from './errors/handler';
 
+require('dotenv').config();
+
 const app = express();
 app.use(cors());
 app.use(express.json());
