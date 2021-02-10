@@ -18,6 +18,6 @@ export default class Users {
     }
 
     generateToken() {
-        return jwt.sign({ email: this.email }, "secret", { expiresIn: '1h' });
+        return jwt.sign({ email: this.email }, process.env.JWT_SECRET || 'secret', { expiresIn: '1h' });
     }
 }

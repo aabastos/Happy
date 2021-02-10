@@ -15,6 +15,7 @@ routes.get("/orphanages", OrphanagesController.index);
 routes.get("/orphanages/:id", OrphanagesController.show);
 routes.post("/orphanages", upload.array('images'), OrphanagesController.create);
 routes.post("/authenticate", UsersController.authenticate);
+routes.post("/users", UsersController.create);
 
 routes.use(authMiddleware);
 
@@ -24,7 +25,6 @@ routes.put("/orphanages/:id", upload.array('images'), OrphanagesController.updat
 routes.delete("/orphanages/:id", OrphanagesController.delete);
 
 routes.get("/users", UsersController.index);
-routes.post("/users", UsersController.create);
 
 routes.delete("/images/:id", ImagesController.delete);
 
